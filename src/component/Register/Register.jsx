@@ -3,21 +3,27 @@ import React, { useState } from "react";
 import { auth } from "../../firebase.init";
 
 const Register = () => {
-  const [error,setError] = useState('');
+  const [error, setError] = useState("");
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
     console.log(email, password);
-    setError('');
-    createUserWithEmailAndPassword(auth, email, password).then((result) => {
-      console.log(result.user)
+
+    setError("");
+
+    // ✅ Chain catch here, not inside console.log
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((result) => {
+        console.log("User created:", result.user);
+      })
       .catch((err) => {
-      console.log("ERROR", err);
-      setError(error.message)
+        console.error("ERROR:", err);
+        setError(err.message);
       });
-    });
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="max-w-lg mx-auto mt-20">
@@ -44,17 +50,15 @@ const Register = () => {
                   <a className="link link-hover">Forgot password?</a>
                 </div>
                 <button className="btn btn-neutral mt-4">Register</button>
+
+                {/* show error */}
+                {error && <p className="text-red-500">{error}</p>}
               </fieldset>
             </div>
           </div>
         </div>
       </div>
-      {
-        error && 
-        <p className="text-red-700">{error}</p>
-      }
     </form>
-    
   );
 };
 
