@@ -12,12 +12,13 @@ const Register = () => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    console.log(email, password);
+    const terms = event.target.terms.checked
+    console.log(email, password,terms);
 
     setError("");
     setSuccess(false);
 
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password )
       .then((result) => {
         console.log("User created:", result.user);
         setSuccess(true);
@@ -26,6 +27,11 @@ const Register = () => {
         console.error("ERROR:", err);
         setError(err.message);
         setSuccess(false);
+
+        if(!terms){
+          setError('Please Accept Our Term and Condition')
+          return;
+        }
       });
   };
 
@@ -64,12 +70,19 @@ const Register = () => {
                 <div>
                   <a className="link link-hover">Forgot password?</a>
                 </div>
-
+                <fieldset className="fieldset bg-base-100 w-full">
+                  <label className="label">
+                    <input type="checkbox" name="terms" className="checkbox" />
+                    Remember me
+                  </label>
+                </fieldset>
                 <button className="btn btn-neutral mt-4">Register</button>
 
                 {/* show error */}
                 {error && <p className="text-red-500">{error}</p>}
-                {success && <p className="text-green-600">Sign Up Successful</p>}
+                {success && (
+                  <p className="text-green-600">Sign Up Successful</p>
+                )}
               </fieldset>
             </div>
           </div>
