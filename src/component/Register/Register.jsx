@@ -4,6 +4,7 @@ import { auth } from "../../firebase.init";
 
 const Register = () => {
   const [error, setError] = useState("");
+  const [success,setSuccess] = useState(false)
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -12,15 +13,18 @@ const Register = () => {
     console.log(email, password);
 
     setError("");
+    setSuccess(false)
 
-    // ✅ Chain catch here, not inside console.log
+  
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         console.log("User created:", result.user);
+        setSuccess(true)
       })
       .catch((err) => {
         console.error("ERROR:", err);
         setError(err.message);
+        setSuccess(false)
       });
   };
 
@@ -53,6 +57,9 @@ const Register = () => {
 
                 {/* show error */}
                 {error && <p className="text-red-500">{error}</p>}
+                {
+                success && <p className="text-green-600">Sign Up Successful</p>
+                }
               </fieldset>
             </div>
           </div>
