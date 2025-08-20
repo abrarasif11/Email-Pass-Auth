@@ -1,4 +1,6 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import React from "react";
+import { auth } from "../../firebase.init";
 
 const Register = () => {
   const handleSubmit = (event) => {
@@ -6,6 +8,15 @@ const Register = () => {
     const email = event.target.email.value;
     const password = event.target.password.value;
     console.log(email,password)
+
+   createUserWithEmailAndPassword(auth,email,password)
+   .then(result =>{
+    console.log(result.user)
+    .catch(err => {
+      console.log("ERROR", err)
+    })
+   })
+     
   };
   return (
     <form onSubmit={handleSubmit}>
