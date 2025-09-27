@@ -1,1 +1,1 @@
-# Email Verification
+# • Email Verification
