@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      email pass auth
+      Email Pass Auth
     </>
   )
 }
